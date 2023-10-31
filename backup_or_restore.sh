@@ -24,5 +24,5 @@ else
     wp ai1wm backup --allow-root --path=/var/www/html
     LATEST_BACKUP=$(ls -t /var/www/html/wp-content/ai1wm-backups | head -n1)
     aws s3 cp /var/www/html/wp-content/ai1wm-backups/${LATEST_BACKUP} s3://${S3_BUCKET_NAME}/${LATEST_BACKUP}
-    rm /var/www/html/wp-content/ai1wm-backups/${LATEST_BACKUP}"
+    rm /var/www/html/wp-content/ai1wm-backups/${LATEST_BACKUP}
 fi
