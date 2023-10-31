@@ -1,6 +1,4 @@
 #!/bin/bash
-
-
 set -e
 
 apt update && apt install awscli -y
@@ -14,7 +12,6 @@ wp plugin install all-in-one-wp-migration-unlimited-extension.zip --force --acti
 rm all-in-one-wp-migration-unlimited-extension.zip
 chown -R www-data:www-data /var/www/html
 wp ai1wm backup --allow-root --path=/var/www/html
-BACKUP_FOLDER="/var/www/html/wp-content/ai1wm-backups"
-LATEST_BACKUP=$(ls -t ${BACKUP_PATH} | head -n1)
-aws s3 cp ${BACKUP_FOLDER}/${LATEST_BACKUP} s3://${S3_BUCKET_NAME}/${LATEST_BACKUP}
-rm ${BACKUP_FOLDER}/${LATEST_BACKUP}
+LATEST_BACKUP=$(ls -t /var/www/html/wp-content/ai1wm-backups | head -n1)
+aws s3 cp /var/www/html/wp-content/ai1wm-backups/${LATEST_BACKUP} s3://${S3_BUCKET_NAME}/${LATEST_BACKUP}
+rm /var/www/html/wp-content/ai1wm-backups/${LATEST_BACKUP}
