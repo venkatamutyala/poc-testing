@@ -12,3 +12,4 @@ wp plugin install all-in-one-wp-migration --version=7.79 --activate --allow-root
 aws s3 cp ${S3_OBJECT_KEY} all-in-one-wp-migration-unlimited-extension.zip
 wp plugin install all-in-one-wp-migration-unlimited-extension.zip --force --activate --allow-root --path=/var/www/html
 rm all-in-one-wp-migration-unlimited-extension.zip
+chown -R www-data:www-data /var/www/html
