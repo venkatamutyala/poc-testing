@@ -15,19 +15,19 @@ chown -R www-data:www-data /var/www/html
 
 if [ -n "$BACKUP_TO_RESTORE" ]; then
     echo "RESTORING BACKUP NOW: ${BACKUP_TO_RESTORE}"
-    wp maintenance-mode activate
+    wp maintenance-mode activate --activate --allow-root --path=/var/www/html
     sleep 30;
     # download backup and restore
     aws s3 cp s3://${S3_BUCKET_NAME}/${BACKUP_TO_RESTORE} /var/www/html/wp-content/ai1wm-backups/restore.wpress
     wp ai1wm restore restore.wpress --yes --allow-root --path=/var/www/html
     rm /var/www/html/wp-content/ai1wm-backups/restore.wpress
-    wp maintenance-mode deactivate
+    wp maintenance-mode deactivate --activate --allow-root --path=/var/www/html
 else
-    wp maintenance-mode activate
+    wp maintenance-mode activate --activate --allow-root --path=/var/www/html
     sleep 30;
     wp ai1wm backup --allow-root --path=/var/www/html --exclude-spam-comments --exclude-post-revisions --exclude-themes --exclude-inactive-themes --exclude-muplugins --exclude-inactive-plugins --exclude-cache --exclude-email-replace 
     LATEST_BACKUP=$(ls -t /var/www/html/wp-content/ai1wm-backups | head -n1)
     aws s3 cp /var/www/html/wp-content/ai1wm-backups/${LATEST_BACKUP} s3://${S3_BUCKET_NAME}/${LATEST_BACKUP}
     rm /var/www/html/wp-content/ai1wm-backups/${LATEST_BACKUP}
-    wp maintenance-mode deactivate
+    wp maintenance-mode deactivate --activate --allow-root --path=/var/www/html
 fi
